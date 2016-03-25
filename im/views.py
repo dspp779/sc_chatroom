@@ -14,6 +14,8 @@ im_listen_dict = defaultdict(Queue)
 waiting_user_queue = Queue()
 
 # Create your views here.
+
+@never_cache
 def msg_handler(request):
     if request.method == 'GET':
         # TODO: assign receiver
@@ -29,7 +31,8 @@ def msg_handler(request):
         im_listen_dict[msg.receiver.id].put(msg)
         return JsonResponse(msg.to_json())
     return HttpResponse(status=501)
-
+    
+@never_cache
 def login(request):
     if request.method == 'GET':
         sender = ChatUser.objects.get(id=request.session['user-id'])
