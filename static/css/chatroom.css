@@ -1,0 +1,165 @@
+/*!
+ * Chat room css 
+ */
+
+#chat-room {
+    padding-top: 50px;
+}
+
+.info-area {
+    background: #1d9b6c;
+    height: 50px;
+    padding: 10px;
+    text-align: left;
+}
+
+.info-area span {
+    margin: 0 10px;
+}
+
+.chat-area {
+    background: white;
+    height: 100%;
+    padding: 0;
+    color: black;
+    text-align: left;
+    max-width: 550px;
+}
+
+.profile_pic {
+    width: 30px;
+    border-radius: 50%;
+}
+
+.profile_age {
+    color: #CCCCCC;
+}
+
+.chat-footer {
+    position: absolute;
+    bottom: 0;
+    min-height: 30px;
+    width: 100%;
+    border-top: 1px #c9d0da solid;
+    font-size: 18px;
+    background: white;
+}
+
+.conversation {
+    background-color: #edeef1;
+    height: 100%;
+    padding-bottom: 50px;
+    overflow: scroll;
+}
+
+.msg-area {
+    padding: 10px 8px 6px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    position: relative;
+    z-index: 1;
+}
+
+.msg-area::selection {
+    background: rgba(0,0,0,.2);
+}
+
+.msg-placeholder {
+    padding: 10px 8px 6px;
+    position: absolute;
+    color:#dcdee3;
+    z-index: 0;
+}
+
+.msg-block {
+    position: relative;
+    padding: 4px 14px 4px 19px;
+}
+
+.message {
+    position: relative;
+    background-color: #e9eaed;
+    padding: 5px 8px 4px;
+    border-collapse: collapse;
+    border: 1px solid #bcc7d6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width: 80%;
+    display: inline-block;
+}
+
+.rMsg {
+    text-align: right;
+}
+
+.lMsg {
+    text-align: left;
+}
+
+.rMsg .message {
+    background: #e0edff;
+    border-radius: 12px 0 0 12px;
+}
+
+.rMsg .msg-block:first-child .message {
+    border-top-right-radius: 12px;
+}
+
+.rMsg .msg-block:last-child .message {
+    border-bottom-right-radius: 12px;
+}
+
+.lMsg .message{
+    background: #fefefe;
+    border-radius: 0 12px 12px 0;
+}
+
+.lMsg .msg-block:first-child  .message {
+    border-top-left-radius: 12px;
+}
+
+.lMsg .msg-block:last-child  .message {
+    border-bottom-left-radius: 12px;
+}
+
+@media(min-width:768px) {
+    
+    #chat-room {
+        z-index: 1033;
+    }
+
+    .info-area {
+        height: 100%;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .profile_pic {
+        width: 80%;
+        margin: 10px;
+    }
+    
+    .profile_name {
+        font-size: 24px;
+    }
+
+}
+
+@media(max-width:767px) {
+    
+    .info-area {
+        z-index: 1033;
+        display: -webkit-flex; /* Safari */
+        -webkit-align-items: center; /* Safari 7.0+ */
+        display: flex;
+        align-items: center;
+    }
+
+    .chat-area {
+        z-index: 1033;
+    }
+
+    .profile_age {
+        font-size: 11px;
+    }
+}
