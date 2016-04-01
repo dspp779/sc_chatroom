@@ -10,13 +10,18 @@ chatroom for anonymous collaboration on desert survival task.
   - eventlet
 
 ## Get started
-Create a new virtual environment, and clone the repository.
+Create a new virtual environment (recommend)
 ```console
 $ virtualenv test1
+$ source test1/bin/activate
+```
+Clone the repository.
+```console
 $ git clone git@github.com:dspp779/sc_chatroom.git
+$ cd sc_chatroom
 ```
 
-Install necessary library from requirement.txt
+Install recommended python packages from requirement.txt
 ```console
 $ pip install -r requirements.txt
 ```
