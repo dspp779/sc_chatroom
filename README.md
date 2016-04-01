@@ -6,8 +6,8 @@ chatroom for anonymous collaboration on desert survival task.
   - python
   - django
 - Recommended
-  -gunicorn
-  -eventlet
+  - gunicorn
+  - eventlet
 
 ## Get started
 Create a new virtual environment, and clone the repository.
