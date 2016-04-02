@@ -23,23 +23,15 @@ function getCookie(name) {
 }
 var csrftoken = getCookie('csrftoken');
 
-// jQuery to collapse the navbar on scroll
-$(window).scroll(function() {
-    if ($(".navbar").offset().top > 50) {
-        $(".navbar-fixed-top").addClass("top-nav-collapse");
-    } else {
-        $(".navbar-fixed-top").removeClass("top-nav-collapse");
-    }
-});
-
 // jQuery for page scrolling feature - requires jQuery Easing plugin
 $(function() {
     $('html, body').scrollTop(0)
     $('a.page-scroll').on('click', function(event) {
         var $anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: $($anchor.attr('href')).offset().top
-        }, 1500, 'easeInOutExpo');
+        // $('html, body').stop().animate({
+        //     scrollTop: $($anchor.attr('href')).offset().top
+        // }, 1500, 'easeInOutExpo');
+        $($anchor.attr('href')).siblings().addClass('hidden').end().removeClass('hidden');
         event.preventDefault();
     });
     
@@ -53,7 +45,7 @@ $(function() {
 function initContent() {
     $('#login-form').on("submit", function(event){
         event.preventDefault();
-        enter_chatroom();
+        login();
     });
 }
 
@@ -62,27 +54,24 @@ function initMsgTextbox() {
         if(event.keyCode == 13 && !event.shiftKey) {
             msg = $(this).text().trim()
             if(msg.length > 0) {
-                sendMsg(msg)
-                $(this).text('')
+                sendMsg(msg);
+                $(this).text('');
+                refresh_msg_placeholder();
             }
             event.preventDefault();
         }
     });
-    $('div.msg-area').on('input', function(event) {
-        hasWord = $(this).text().length > 0 ? true:false;
-        $(this).siblings(".msg-placeholder").text(hasWord ? '':'enter message...');
-    });
-    $('div.msg-area').on('input', function(event) {
-        hasWord = $(this).text().length > 0 ? true:false;
-        $(this).siblings(".msg-placeholder").text(hasWord ? '':'enter message...');
-    });
-    $('div.msg-area').on('paste', function(event) {
-        hasWord = $(this).text().length > 0 ? true:false;
-        $(this).siblings(".msg-placeholder").text(hasWord ? '':'enter message...');
-        event.preventDefault();
-    });
+    $('div.msg-area').on('input paste', refresh_msg_placeholder);
 }
 
+function refresh_msg_placeholder() {
+    hasWord = $('div.msg-area').text().length > 0 ? true:false;
+    if(hasWord) {
+        $('div.msg-placeholder').addClass('hidden')
+    } else {
+        $('div.msg-placeholder').removeClass('hidden')
+    }
+}
     
 // Closes the Responsive Menu on Menu Item Click
 $('.navbar-collapse ul li a').click(function() {
@@ -91,11 +80,7 @@ $('.navbar-collapse ul li a').click(function() {
 
 function enter_chatroom() {
     $('body').removeClass('loaded');
-    // 
-    $('html, body').stop().animate({
-        scrollTop: $('#chat-room').offset().top
-    }, 1500, 'easeInOutExpo');
-    login();
+    $('#chat-room').removeClass('hidden').siblings().addClass('hidden')
 }
 
 function login() {
@@ -103,20 +88,30 @@ function login() {
     test = $('#login-form').serializeArray()
     for(obj in test) {
         t = test[obj];
-        logindata[t.name] =t.value;
+        logindata[t.name] =t.value.trim();
     }
-    $.ajax({
-        type: "POST",
-        url: 'im/login/',
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(logindata),
-        dataType: 'json'
-    }).done(onLogin);
+    // validate login data
+    if(logindata.name.length > 0 && parseInt(logindata.age) > 0 && logindata.gender) {
+        $.ajax({
+            type: "POST",
+            url: 'im/login/',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(logindata),
+            dataType: 'json'
+        }).done(onLogin);    
+    } else {
+        $('#login-form').find('input[name="name"]').css('background-color', (logindata.name.length > 0) ? '#fff':'gold').end()
+            .find('input[name="age"]').css('background-color', (parseInt(logindata.age) > 0) ? '#fff':'gold').end()
+            .find('div.gender > div').css('background-color', (logindata.gender) ? '#fff':'gold');
+        return false;
+    }
+        
+    
 }
 
 myId = '';
 function onLogin(logindata) {
-    $('body').addClass('loaded');
+    enter_chatroom();
     myId = logindata.id;
     console.log('login as ' + logindata.name);
     getReceiver();
@@ -200,8 +195,8 @@ function onNewMessage(msg) {
 }
 
 function setProfile(receiver) {
+    $('.chatroom').addClass('connected')
     $('span.profile_name').text(receiver.name).siblings('.profile_age').text(receiver.age);
     receiverid = receiver.id;
-    hasWord = $('.msg-area').text().length > 0 ? true:false;
-    $(".msg-placeholder").text(hasWord ? '':'enter message...');
+    $(".msg-placeholder").text('Write something...');
 }

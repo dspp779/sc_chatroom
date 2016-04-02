@@ -18,7 +18,6 @@
     <!-- Custom CSS -->
     <link href="{% static 'css/index.css' %}" rel="stylesheet">
     <link href="{% static 'css/chatroom.css' %}" rel="stylesheet">
-	<link href="{% static 'css/preload.css' %}" rel="stylesheet" >
 
     <!-- Custom Fonts -->
     <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
@@ -81,7 +80,7 @@
     </header>
     
     <!-- Login Section -->
-    <section id="login" class="container-fluid cover-section middle-align">
+    <section id="login" class="cover-section middle-align hidden">
         <div class="dialogue">
             <form id="login-form" class="form-horizontal" role="form">
                 <div class="form-group">
@@ -113,7 +112,7 @@
                 </div>
                 -->
                 
-                <div class="form-group">
+                <div class="form-group gender">
                     <label class="control-label col-xs-10 col-xs-offset-1 col-sm-2 col-sm-offset-1" for="gender">Gender:</label>
                     <div class="col-xs-10 col-xs-offset-1 col-sm-7">
                         <label class="radio-inline"><input type="radio" name="gender" value="male" >Male</label>
@@ -122,7 +121,7 @@
                     </div>
                 </div>
                 <div class="form-group"> 
-                    <div class="col-xs-10 col-xs-offset-1 col-sm-offset-4 col-sm-4">
+                    <div class="col-xs-12" style="text-align:center">
                         <button type="submit" class="btn btn-danger">Submit</button>
                     </div>
                 </div>
@@ -131,18 +130,18 @@
     </section>
 
     <!-- Chat room Section -->
-    <section id="chat-room" class="content-section text-center cover-section">
-        <div class="chatroom cover-section">
-            <div class="info-area col-xs-12 col-sm-4 col-md-2">
+    <section id="chat-room" class="content-section text-center cover-section middle-align hidden">
+        <div class="chatroom">
+            <div class="info-area">
                 <img src="{% static 'img/anonymous-m.png' %}" class="profile_pic" alt="Profile Picture">
-                <span class="profile_name">Not Connected</span>
+                <span class="profile_name">Waiting Connection...</span>
                 <span class="profile_age"></span>
             </div>
             
-            <div class="chat-area col-xs-12 col-sm-8 col-md-10">
+            <div class="chat-area">
                 <div class="conversation"></div>
                 <div class="chat-footer">
-                    <div class="msg-placeholder">enter message...</div>
+                    <div class="msg-placeholder">Write something...</div>
                     <div class="msg-area" contenteditable="true" role="textbox" spellcheck="true" title="enter message..."></div>
                     <!--<input type="text" placeholder="enter message..." autocomplete="off" autocorrect="off">-->
                 </div>
@@ -150,11 +149,11 @@
         </div>
     </section>
 
-    <div id="loader-wrapper">
+    <!--<div id="loader-wrapper">
         <div id="loader"></div>
         <div class="loader-section section-left"></div>
         <div class="loader-section section-right"></div>
-    </div>
+    </div>-->
 
     <!-- jQuery -->
     <script src="{% static 'js/jquery.js' %} "></script>
