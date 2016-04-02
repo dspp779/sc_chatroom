@@ -63,5 +63,4 @@ target/
 #*.png
 #*.wav
 .DS_Store
-
-
+*.sqlite3
