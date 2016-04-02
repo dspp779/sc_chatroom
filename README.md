@@ -17,7 +17,7 @@ $ source test1/bin/activate
 ```
 Clone the repository.
 ```console
-$ git clone git@github.com:dspp779/sc_chatroom.git
+$ git clone https://github.com/dspp779/sc_chatroom.git
 $ cd sc_chatroom
 ```
 
