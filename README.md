@@ -26,6 +26,10 @@ Install recommended python packages from requirement.txt
 $ pip install -r requirements.txt
 ```
 
+Migrate database schema
+```console
+$ python manage.py migrate
+```
 
 Then, you are good to go.
 
@@ -35,5 +39,6 @@ $ gunicorn chatroom.wsgi -b 0.0.0.0:5566 --worker-class eventlet
 ```
 or,
 ```console
-$ python manage.py 0.0.0.0:5566
+$ python manage.py runserver 0.0.0.0:5566
 ```
+(note: you may need to set DEBUG to False under `chatroom/settings.py`.)
