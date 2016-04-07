@@ -37,7 +37,7 @@ def msg_handler(request):
         msg = im_listen_dict[request.session['user-id']].get()
         msg_json = msg.to_json()
         # generate fake profile
-        if msg_json['msg_type'] == 'receiver':
+        if msg_json['msg_type'] == 'receiver' and msg_json['sender']['age'] > 0:
             msg_json['sender'] = _to_fake_profile(msg_json['sender'])
         return JsonResponse(msg_json)
     elif request.method == 'POST':
@@ -66,7 +66,8 @@ def login(request):
             im_listen_dict[receiver.id].put(msg)
             receiver = receiver.to_json()
             # generate fake profile
-            receiver = _to_fake_profile(receiver)
+            if receiver['age'] > 0:
+                receiver = _to_fake_profile(receiver)
         return JsonResponse({'receiver':receiver})
     elif request.method == 'POST':
         profile = json.loads(request.body)
