@@ -19,7 +19,7 @@ from django.contrib import admin
 from views import welcome
 
 urlpatterns = [
-    # url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^im/', include('im.urls')),
     url(r'^', welcome),
 ]

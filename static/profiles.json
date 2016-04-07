@@ -1,0 +1,14 @@
+[
+	{"gender":"female", "age":18, "path":"TMBfemale18-2neutral.bmp", "name":"Jane"},
+	{"gender":"female", "age":19, "path":"TMWfemale19neutral.bmp", "name":"Susan"},
+	{"gender":"female", "age":20, "path":"EMBfemale20neutral.bmp", "name":"Patricia"},
+	{"gender":"female", "age":21, "path":"EMWfemale21-2neutral.bmp", "name":"Emily"},
+	{"gender":"female", "age":22, "path":"WAfemale22neutral.bmp", "name":"Judith"},
+	{"gender":"female", "age":25, "path":"EMIfemale25-2neutral.bmp", "name":"Martha"},
+	{"gender":"male", "age":18, "path":"TMBmale18neutral.bmp", "name":"Robert"},
+	{"gender":"male", "age":19, "path":"WWmale19neutral.bmp", "name":"Kevin"},
+	{"gender":"male", "age":20, "path":"EMWmale20neutral.bmp", "name":"Marc"},
+	{"gender":"male", "age":21, "path":"WWmale21-3neutral.bmp", "name":"Sam"},
+	{"gender":"male", "age":22, "path":"TSFWmale22neutral.bmp", "name":"Adam"},
+	{"gender":"male", "age":24, "path":"EMImale24neutral.bmp", "name":"Michael"}
+]

@@ -6,6 +6,7 @@
 //         $(".navbar-fixed-top").removeClass("top-nav-collapse");
 //     }
 // });
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -34,6 +35,9 @@ $(function() {
         $($anchor.attr('href')).siblings().addClass('hidden').end().removeClass('hidden');
         event.preventDefault();
     });
+    $(".btn").mouseup(function(){
+        $(this).blur();
+    });
     
     $.ajaxSetup({
         headers: { "X-CSRFToken": csrftoken }
@@ -45,7 +49,7 @@ $(function() {
 function initContent() {
     $('#login-form').on("submit", function(event){
         event.preventDefault();
-        login();
+        login(false);
     });
 }
 
@@ -83,15 +87,25 @@ function enter_chatroom() {
     $('#chat-room').removeClass('hidden').siblings().addClass('hidden')
 }
 
-function login() {
+function login(isAnonymous) {
     logindata = {};
-    test = $('#login-form').serializeArray()
-    for(obj in test) {
-        t = test[obj];
-        logindata[t.name] =t.value.trim();
+    if(isAnonymous) {
+        // Anonymous login
+        logindata = {
+            'name': '',
+            'age': -1,
+            'gender': 'other'
+        };
+    } else {
+        test = $('#login-form').serializeArray()
+        for(obj in test) {
+            t = test[obj];
+            logindata[t.name] =t.value.trim();
+        }
     }
+    
     // validate login data
-    if(logindata.name.length > 0 && parseInt(logindata.age) > 0 && logindata.gender) {
+    if(isAnonymous || (logindata.name.length > 0 && parseInt(logindata.age) > 0 && logindata.gender)) {
         $.ajax({
             type: "POST",
             url: 'im/login/',
@@ -196,7 +210,12 @@ function onNewMessage(msg) {
 
 function setProfile(receiver) {
     $('.chatroom').addClass('connected')
-    $('span.profile_name').text(receiver.name).siblings('.profile_age').text(receiver.age);
+    if(receiver.age > 0) {
+        $('span.profile_name').text('Name: ' + receiver.name).siblings('.profile_age').text('Age: ' + receiver.age);
+        $('.profile_pic').attr('src', '/static/img/' + receiver.path);
+    } else {
+        $('span.profile_name').text('').siblings('.profile_age').text('');
+    }
     receiverid = receiver.id;
     $(".msg-placeholder").text('Write something...');
 }

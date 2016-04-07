@@ -29,7 +29,7 @@
     flex-direction: column;
     background: rgba(255, 255, 255, .15);
     box-shadow: 0 0 20px 0 rgba(0,0,0,.25);
-    background: rgba(0, 0, 0, .4);
+    background: rgba(0, 0, 0, .7);
 }
 
 .profile_pic {
@@ -111,7 +111,7 @@
 }
 
 .rMsg .message {
-    background: #e0edff;
+    background: #bed8fd;
     border-radius: 12px 0 0 12px;
 }
 

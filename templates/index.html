@@ -82,50 +82,62 @@
     <!-- Login Section -->
     <section id="login" class="cover-section middle-align hidden">
         <div class="dialogue">
-            <form id="login-form" class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label class="control-label col-xs-10 col-xs-offset-1  col-sm-2 col-sm-offset-1" for="name">Name:</label>
-                    <div class="col-xs-10 col-xs-offset-1 col-sm-7">
-                        <input type="text" class="form-control" name="name" placeholder="Name">
+            <button type="button" class="btn btn-primary" onclick ="javascript:login(true);"> Anonymous </button>
+            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#personal_info" onclick="javascript:init_camera()"> Provide your information </button>
+            
+            <div id ="personal_info" class ="collapse">
+                <form id="login-form" class="form-horizontal" role="form">
+                    
+                    <div id="pic_capture" class="camera">
+                        <video autoplay></video>
+                        <canvas></canvas>
+                        <div class="hint middle-align">Click to take a photo</div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-xs-10 col-xs-offset-1 col-sm-2 col-sm-offset-1" for="age">Age:</label>
-                    <div class="col-xs-10 col-xs-offset-1 col-sm-7">
-                        <input type="number" class="form-control" name="age" placeholder="Age">
+                    
+                    <div class="form-group">
+                        <label class="control-label col-xs-10 col-xs-offset-1  col-sm-2 col-sm-offset-1" for="name">Name:</label>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-7">
+                            <input type="text" class="form-control" name="name" placeholder="Name">
+                        </div>
                     </div>
-                </div>
-                
-                <!--
-                <div class="form-group">
-                    <label class="control-label col-sm-4" for="race">You are:</label>
-                    <div class="col-sm-4">
-                        <select class="form-control" for="race" name="race" >
-                            <option value="none" selected disabled>your ancestry</option>
-                            <option value="african" >African</option>
-                            <option value="american" >American</option>
-                            <option value="asian" >Asian</option>
-                            <option value="european" >European</option>
-                            <option value="russian" >Russian</option>
-                        </select>
+                    <div class="form-group">
+                        <label class="control-label col-xs-10 col-xs-offset-1 col-sm-2 col-sm-offset-1" for="age">Age:</label>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-7">
+                            <input type="number" class="form-control" name="age" placeholder="Age">
+                        </div>
                     </div>
-                </div>
-                -->
-                
-                <div class="form-group gender">
-                    <label class="control-label col-xs-10 col-xs-offset-1 col-sm-2 col-sm-offset-1" for="gender">Gender:</label>
-                    <div class="col-xs-10 col-xs-offset-1 col-sm-7">
-                        <label class="radio-inline"><input type="radio" name="gender" value="male" >Male</label>
-                        <label class="radio-inline"><input type="radio" name="gender" value="female" >Female</label>
-                        <label class="radio-inline"><input type="radio" name="gender" value="other" >Other</label>
+                    
+                    <!--
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="race">You are:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" for="race" name="race" >
+                                <option value="none" selected disabled>your ancestry</option>
+                                <option value="african" >African</option>
+                                <option value="american" >American</option>
+                                <option value="asian" >Asian</option>
+                                <option value="european" >European</option>
+                                <option value="russian" >Russian</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group"> 
-                    <div class="col-xs-12" style="text-align:center">
-                        <button type="submit" class="btn btn-danger">Submit</button>
+                    -->
+                    
+                    <div class="form-group gender">
+                        <label class="control-label col-xs-10 col-xs-offset-1 col-sm-2 col-sm-offset-1" for="gender">Gender:</label>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-7">
+                            <label class="radio-inline"><input type="radio" name="gender" value="male" >Male</label>
+                            <label class="radio-inline"><input type="radio" name="gender" value="female" >Female</label>
+                            <label class="radio-inline"><input type="radio" name="gender" value="other" >Other</label>
+                        </div>
                     </div>
-                </div>
-            </form>
+                    <div class="form-group"> 
+                        <div class="col-xs-12" style="text-align:center">
+                            <button type="submit" class="btn btn-danger">Go</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </section>
 
@@ -134,7 +146,7 @@
         <div class="chatroom">
             <div class="info-area">
                 <img src="{% static 'img/anonymous-m.png' %}" class="profile_pic" alt="Profile Picture">
-                <span class="profile_name">Waiting Connection...</span>
+                <span class="profile_name">Waiting Connection...</span><br>
                 <span class="profile_age"></span>
             </div>
             
@@ -170,6 +182,10 @@
 
     <!-- Custom JavaScript -->
     <script src="{% static 'js/index.js' %} "></script>
+    
+    <!-- Camera JavaScript -->
+    <script src="{% static 'js/adapter.js' %} "></script>
+    <script src="{% static 'js/camera.js' %} "></script>
 
 </body>
 

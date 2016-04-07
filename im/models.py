@@ -36,9 +36,6 @@ class Message(models.Model):
         msg = cls(msg_type=msg_type, sender=sender, receiver=receiver, content=content)
         return msg
 
-    def __unicode__(self):
-        return self.name
-    
     def to_json(self):
         return {
             'id': self.id,
