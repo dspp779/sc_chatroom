@@ -15,6 +15,9 @@ class ChatUser(models.Model):
         user = cls(name=name, age=int(age), gender=gender)
         return user
 
+    def __unicode__(self):
+        return '{}:{}({}|{})'.format(self.id, self.name, self.age, self.gender)
+
     def to_json(self):
         return {
             'id': self.id,
@@ -35,6 +38,9 @@ class Message(models.Model):
     def create(cls, msg_type, sender, receiver, content):
         msg = cls(msg_type=msg_type, sender=sender, receiver=receiver, content=content)
         return msg
+
+    def __unicode__(self):
+        return '{}:{}'.format(self.sender.name, self.content)
 
     def to_json(self):
         return {

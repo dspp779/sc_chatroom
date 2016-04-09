@@ -88,6 +88,7 @@ function enter_chatroom() {
 }
 
 function login(isAnonymous) {
+    closeCamera();
     logindata = {};
     if(isAnonymous) {
         // Anonymous login
