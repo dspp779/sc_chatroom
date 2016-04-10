@@ -4,9 +4,11 @@ from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.core import serializers
+from django.db.models import Q
 from models import ChatUser, Message
 
 from collections import defaultdict
+from itertools import groupby
 from Queue import Queue
 import json
 import random
@@ -84,6 +86,23 @@ def _to_fake_profile(receiver):
     fake_profile = random.choice(list(filter(lambda x: x['gender']==receiver['gender'], profiles)))
     fake_profile['id'] = receiver['id']
     return fake_profile
+
+def msg_history(request, user):
+    if request.method == 'GET':
+        user = user.strip()
+        if len(user) > 0:
+            user = int(user)
+            history = Message.objects.filter(Q(sender__id=user)|Q(receiver__id=user)).order_by('timestamp')
+            history = [ ('rMsg' if sender_id==user else 'lMsg', list(msgs)) for sender_id, msgs in groupby(history, lambda x: x.sender.id) ]
+            return render(request, 'conversation.html', {
+                'user': user,
+                'history': history,
+            })
+        else:
+            return render(request, 'users.html', {
+                'users': ChatUser.objects.all().order_by('id'),
+            })
+    return HttpResponse(status=501)
 
 '''  Message Json Object
 id

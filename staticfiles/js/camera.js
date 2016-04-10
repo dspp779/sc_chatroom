@@ -13,42 +13,47 @@ var video = document.querySelector('video');
 var canvas = window.canvas = document.querySelector('canvas');
 var initialized = false;
 
-function capture_camera() {
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-    $('#pic_capture > .hint').text('Click to turn on camera');
-}
-
 var constraints = {
     audio: false,
     video: true
 };
 
-function successCallback(stream) {
-    window.stream = stream; // make stream available to browser console
-    video.srcObject = stream;
-}
-
-function errorCallback(error) {
-    console.log('navigator.getUserMedia error: ', error);
-}
-
-function init_camera() {
-    if(initialized) return;
-    
-    navigator.getUserMedia(constraints, successCallback, errorCallback);
+$(function() {
     $('#pic_capture').click(function(){
         if($(this).hasClass('camera')) {
             capture_camera();
         } else {
-            init_hint();
+            openCamera()
         }
         $(this).toggleClass('camera');
     });
-    initialized = true;
+});
+
+function openCamera() {
+    navigator.getUserMedia(constraints, successCallback, errorCallback);
 }
 
-function init_hint() {
-    $('.pic_capture > .hint').text('Click to take a photo');
+function closeCamera() {
+    if(window.stream)
+        window.stream.getVideoTracks()[0].stop();
+    $('#pic_capture > .hint').text('Click to turn on camera');
+}
+
+function capture_camera() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    // stop camera stream
+    closeCamera();
+}
+
+function successCallback(stream) {
+    window.stream = stream; // make stream available to browser console
+    video.srcObject = stream;
+    $('#pic_capture > .hint').text('Click to take a photo');
+}
+
+function errorCallback(error) {
+    console.log('navigator.getUserMedia error: ', error);
+    $('#pic_capture > .hint').text('Unable to open camera');
 }

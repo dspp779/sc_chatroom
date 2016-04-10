@@ -34,7 +34,8 @@ function openCamera() {
 }
 
 function closeCamera() {
-    window.stream.getVideoTracks()[0].stop();
+    if(window.stream)
+        window.stream.getVideoTracks()[0].stop();
     $('#pic_capture > .hint').text('Click to turn on camera');
 }
 
