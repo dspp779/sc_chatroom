@@ -88,7 +88,7 @@ def _to_fake_profile(receiver):
     return fake_profile
 
 def msg_history(request, user):
-    if request.method == 'GET':
+    if request.method == 'GET' and request.user.is_authenticated():
         user = user.strip()
         if len(user) > 0:
             user = int(user)

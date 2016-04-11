@@ -71,6 +71,7 @@
     position: relative;
     z-index: 1;
     outline: none;
+    height: 100%;
 }
 
 .msg-area::selection {

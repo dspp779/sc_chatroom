@@ -202,7 +202,7 @@ function onNewMessage(msg) {
             }
             $('div.conversation > div:last').append('<div class="msg-block"><div class="message"></div></div>')
                 .find('.message:last').text(msg.content);
-            $("div.conversation").animate({ scrollTop: $('div.conversation')[0].scrollHeight }, "slow");
+            $("div.conversation").stop().animate({ scrollTop: $('div.conversation')[0].scrollHeight }, "slow");
             // setTimeout(function(){ sendMsg("Hello, too!"); }, 3000);
         default:
             break;
