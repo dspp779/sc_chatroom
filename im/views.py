@@ -11,6 +11,7 @@ from collections import defaultdict
 from itertools import groupby
 from Queue import Queue
 import json
+import csv
 import random
 
 im_listen_dict = defaultdict(Queue)
@@ -63,7 +64,7 @@ def login(request):
             waiting_user_queue.put(sender)
         else:
             receiver = waiting_user_queue.get()
-            msg = Message.create(msg_type='receiver', receiver=receiver, sender=sender, content='Hi')
+            msg = Message.create(msg_type='receiver', receiver=receiver, sender=sender, content='')
             msg.save()
             im_listen_dict[receiver.id].put(msg)
             receiver = receiver.to_json()
@@ -92,12 +93,32 @@ def msg_history(request, user):
         user = user.strip()
         if len(user) > 0:
             user = int(user)
-            history = Message.objects.filter(Q(sender__id=user)|Q(receiver__id=user)).order_by('timestamp')
+            history = Message.objects.filter(Q(msg_type='text')&(Q(sender__id=user)|Q(receiver__id=user))).order_by('timestamp')
             history = [ ('rMsg' if sender_id==user else 'lMsg', list(msgs)) for sender_id, msgs in groupby(history, lambda x: x.sender.id) ]
             return render(request, 'conversation.html', {
                 'user': user,
                 'history': history,
             })
+        else:
+            return render(request, 'users.html', {
+                'users': ChatUser.objects.all().order_by('id'),
+            })
+    return HttpResponse(status=501)
+    
+def msg_history_csv(request, user):
+    if request.method == 'GET' and request.user.is_authenticated():
+        user = user.strip()
+        if len(user) > 0:
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="'+str(user)+'.csv"'
+            user = int(user)
+            history = Message.objects.filter(Q(msg_type='text')&(Q(sender__id=user)|Q(receiver__id=user))).order_by('timestamp')
+            
+            writer = csv.writer(response)
+            writer.writerow(['ID', 'Type', 'Sender', 'Receiver', 'Content', 'Timestamp'])
+            for msg in history:
+                writer.writerow([msg.id, msg.msg_type, msg.sender.id, msg.receiver.id, msg.content, msg.timestamp]) 
+            return response
         else:
             return render(request, 'users.html', {
                 'users': ChatUser.objects.all().order_by('id'),
