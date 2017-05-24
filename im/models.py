@@ -4,12 +4,13 @@ from django.db import models
 
 # Create your models here.
 
+
 class ChatUser(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     age = models.IntegerField()
     gender = models.CharField(max_length=20, default='other')
-    
+
     @classmethod
     def create(cls, name, age, gender):
         user = cls(name=name, age=int(age), gender=gender)
@@ -25,6 +26,7 @@ class ChatUser(models.Model):
             'age': self.age,
             'gender': self.gender,
             }
+
 
 class Message(models.Model):
     id = models.AutoField(primary_key=True)
@@ -51,4 +53,4 @@ class Message(models.Model):
             'content': self.content,
             'timestamp': self.timestamp.strftime('%Y-%m-%d %H:%M:%S')
             }
-    
+
