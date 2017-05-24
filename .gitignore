@@ -62,5 +62,9 @@ target/
 #*.jpg
 #*.png
 #*.wav
-db.sqlite3
+*.sqlite3
 .DS_Store
+
+# virtualenv
+venv/
+ENV/
